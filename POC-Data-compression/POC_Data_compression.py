@@ -1,4 +1,3 @@
-from base64 import encode
 import heapq
 
 class Node:
@@ -52,23 +51,33 @@ def get_frequency(file_data):
         sorted_frequency_list.append([letter, frequency])
     return sorted_frequency_list
 
-
-
-def encode_letters(root, carried_letter, encoded_file):
+# - encode_letters(root, carried_code, encoded_file)
+# This function gets the root of the tree, the carried code(0 or 1) and a pointer to a list which will server
+# as a list to hold all of the codes for all of the letters in the file.
+# The function itself goes over all of the letters in the tree and gives each one its own code and adds that code into encoded_file
+# which will hold them in order of most frequent letters to the smallest frequency.
+# Input : root - Node, carried_code - str, encoded_file - list
+# Output : None
+def encode_letters(root, carried_code, encoded_file):
     if root is None:
         return
 
     if root.left is None and root.right is None:
-        if carried_letter == "":
-            carried_letter = "0"
-        encoded_file.append(carried_letter)
+        if carried_code == "":
+            carried_code = "0"
+        encoded_file.append(carried_code)
         return
 
-    encode_letters(root.left, carried_letter + '0', encoded_file)
-    encode_letters(root.right, carried_letter + '1', encoded_file)
+    encode_letters(root.left, carried_code + '0', encoded_file)
+    encode_letters(root.right, carried_code + '1', encoded_file)
 
-
-
+# get_huffman_encoding(frequency_list)
+# This function gets a frequency list which holds lists of 2 items each, the letter in index 0 and the frequency in index 1.
+# The function itself creates a binary huffman tree and then calls the function "encode_letters" to traverse the tree and give codes
+# to each letter that shows up in the file.
+# afterwords the function returns a dictionary of all of the letters and as their value their code.
+# Input : frequency_list - 2D list
+# Output : keys_dict - dictionary
 def get_huffman_encoding(frequency_list):
     keys_dict = {}
     encoded_file = []
@@ -95,7 +104,12 @@ def get_huffman_encoding(frequency_list):
         keys_dict[frequency_list[i][0]] = encoded_file[i]
     return keys_dict
 
-
+# - encode(keys_dict, file_data)
+# This function gets a dictionary of all of the letters that appear in the file data
+# and it goes over all of the file data and assign to each letter in it its code from the huffman tree.
+# The function returns the encoded file with all of the codes themselves.
+# Input : keys_dict - dictionary, file_data - str
+# Output : encoded_file - str
 def encode(keys_dict, file_data):
     encoded_file = []
 
