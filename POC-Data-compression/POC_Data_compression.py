@@ -18,6 +18,7 @@ def main():
     frequency_list = get_frequency(file_data)
     keys_dict = get_huffman_encoding(frequency_list)
     encoded_file = encode(keys_dict, file_data)
+
     for letter in encoded_file:
         print(letter, end=" ")
 
