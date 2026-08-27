@@ -1,5 +1,6 @@
 import heapq
 
+
 class Node:
     def __init__(self, frequency, index, left=None, right=None):
         self.frequency = frequency
@@ -7,24 +8,32 @@ class Node:
         self.left = left
         self.right = right
 
+
 def main():
     file_data = ""
     frequency_list = []
     frequency_minheap = []
     keys_dict = {}
     encoded_file = []
-    
+
     file_data = get_string_data()
     frequency_list = get_frequency(file_data)
     keys_dict = get_huffman_encoding(frequency_list)
     encoded_file = encode(keys_dict, file_data)
-
+    print(f"Encoded file: ", end='')
     for letter in encoded_file:
-        print(letter, end=" ")
+        print(letter, end="")
+    
+    print("\n")
+    print("Decoded file: ", end='')
+    decode(keys_dict, encoded_file)
 
 
-def get_string_data(): # temporary
+
+
+def get_string_data():  # temporary
     return input("Enter the string data:\n")
+
 
 # - get_data(file_path)
 # This function gets a file path, it then proceeds to open it and read the data and returns it
@@ -32,6 +41,7 @@ def get_string_data(): # temporary
 # Output: file_data - str
 def get_data(file_path):
     pass
+
 
 # - get_frequency(file_data)
 # This function gets file data for a file then it proceeds to create a dictionary for each letter by its frequency
@@ -42,7 +52,7 @@ def get_data(file_path):
 def get_frequency(file_data):
     frequency_dict = {}
     sorted_frequency_list = []
-    
+
     for letter in file_data:
         if letter in frequency_dict:
             frequency_dict[letter] += 1
@@ -51,6 +61,7 @@ def get_frequency(file_data):
     for letter, frequency in sorted(frequency_dict.items(), key=lambda item: item[1]):
         sorted_frequency_list.append([letter, frequency])
     return sorted_frequency_list
+
 
 # - encode_letters(root, carried_code, encoded_file)
 # This function gets the root of the tree, the carried code(0 or 1) and a pointer to a list which will server
@@ -72,6 +83,7 @@ def encode_letters(root, carried_code, encoded_file):
     encode_letters(root.left, carried_code + '0', encoded_file)
     encode_letters(root.right, carried_code + '1', encoded_file)
 
+
 # get_huffman_encoding(frequency_list)
 # This function gets a frequency list which holds lists of 2 items each, the letter in index 0 and the frequency in index 1.
 # The function itself creates a binary huffman tree and then calls the function "encode_letters" to traverse the tree and give codes
@@ -92,18 +104,19 @@ def get_huffman_encoding(frequency_list):
         return ["0"]
 
     while len(min_heap) >= 2:
+        freq_left, indx_left, left = heapq.heappop(min_heap)  # Left node
+        freq_right, indx_right, right = heapq.heappop(min_heap)  # Right node
 
-        freq_left, indx_left, left = heapq.heappop(min_heap) # Left node
-        freq_right, indx_right, right = heapq.heappop(min_heap) # Right node
+        newNode = Node(left.frequency + right.frequency, min(left.index, right.index), left,
+                       right)  # Creates a new node with both of the frequencies
+        heapq.heappush(min_heap, (newNode.frequency, newNode.index, newNode))  # Pushes the new node inside the heap
 
-        newNode = Node(left.frequency + right.frequency, min(left.index, right.index), left, right) # Creates a new node with both of the frequencies
-        heapq.heappush(min_heap, (newNode.frequency, newNode.index, newNode)) # Pushes the new node inside the heap
-
-    root = min_heap[0][2] # The first index is 0, and the second index (2) is the node itself (the root)
+    root = min_heap[0][2]  # The first index is 0, and the second index (2) is the node itself (the root)
     encode_letters(root, "", encoded_file)
     for i in range(len(frequency_list)):
         keys_dict[frequency_list[i][0]] = encoded_file[i]
     return keys_dict
+
 
 # - encode(keys_dict, file_data)
 # This function gets a dictionary of all of the letters that appear in the file data
@@ -118,19 +131,29 @@ def encode(keys_dict, file_data):
         encoded_file.append(keys_dict[letter])
     return encoded_file
 
+def check_code(keys_dict, current_sequence):
+    dict_vals = keys_dict.values()
+    for val in dict_vals:
+        if val == current_sequence:
+            return True
+    return False
 
 
+def decode(keys_dict, file_data):
+    decoded_file = []
+    current_sequence = ""
 
-
-
-
-
-
-
-
-
-
-
+    for i in range(len(file_data)):
+        current_sequence += file_data[i]
+        if check_code(keys_dict, current_sequence):
+            decoded_file.append([key for key, value in keys_dict.items() if value == current_sequence])
+            current_sequence = ""
+        else:
+            current_sequence += file_data[i]
+    
+    for letter in decoded_file:
+        print(letter[0], end='')
+    print()
 
 if __name__ == "__main__":
     main()
