@@ -116,16 +116,16 @@ map<char, vector<bool>> mapCodesAndLetters(map<char, unsigned long long> freqMap
 	while (minHeap.size() >= 2) {
 		Node* left = pop(minHeap);
 		Node* right = pop(minHeap);
-		Node* newNode = new Node((left->freq + right->freq), min(left->indx, right->indx), 'g', left, right); // 'g' is fine since the newNode has predececors
+		Node* newNode = new Node((left->freq + right->freq), min(left->indx, right->indx), '_', left, right); // '_' is fine since the newNode has predececors
 		pushByFreq(minHeap, newNode);
 	}
 	Node* root = minHeap[0];
 	vector<bool> curr;
 	calculateCodes(*root, curr, &codeVector);
 
-	sort(freqVector.begin(), freqVector.end(), [](auto& left, auto& right) {
-		return left.second < right.second;
-	});
+	//sort(freqVector.begin(), freqVector.end(), [](auto& left, auto& right) {
+	//	return left.second < right.second;
+	//});
 
 	for (const auto& val : freqVector) {
 		codeMap[val.first] = codeVector.back();
