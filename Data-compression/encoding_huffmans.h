@@ -26,7 +26,7 @@ map<char, unsigned long long> getFreq(vector<char> data_v);
 vector<bool> insertCurr(vector<bool> curr, bool code);
 bool freqCmp(pair<char, unsigned long long> A, pair<char, unsigned long long> B);
 vector<pair<char, unsigned long long>> sortMap(map<char, unsigned long long> &freqMap);
-void calculateCodes(Node root, vector<bool>, vector<vector<bool>> *encodedFile);
+void calculateCodes(Node root, vector<bool>, vector<pair<char, vector<bool>>>*encodedFile);
 Node* pop(vector<Node*>& minHeap);
 void pushByFreq(vector<Node*>& minHeap, Node* newNode);
 map<char, vector<bool>> mapCodesAndLetters(map<char, unsigned long long> freqMap);

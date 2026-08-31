@@ -51,13 +51,14 @@ vector<pair<char, unsigned long long>> sortMap(map<char, unsigned long long> &fr
 	return tempFreqVector;
 }
 
-void calculateCodes(Node root, vector<bool> curr, vector<vector<bool>> *encodedFile) {
+void calculateCodes(Node root, vector<bool> curr, vector<pair<char, vector<bool>>> *encodedFile) {
 	try {
 		if (root.left == nullptr && root.right == nullptr) {
 			if (curr.size() == NULL) {
 				curr.push_back(false);
 			}
-			encodedFile->push_back(curr);
+			pair<char, vector<bool>> temp = { root.letter, curr };
+			encodedFile->push_back(temp);
 			return;
 		}
 		calculateCodes(*root.left, insertCurr(curr, false), encodedFile);
@@ -98,7 +99,7 @@ void pushByFreq(vector<Node*>& minHeap, Node* newNode) {
 
 map<char, vector<bool>> mapCodesAndLetters(map<char, unsigned long long> freqMap) {
 	map<char, vector<bool>> codeMap;
-	vector<vector<bool>> codeVector;
+	vector<pair<char, vector<bool>>> codeVector;
 	
 	vector<Node*> minHeap;
 
@@ -123,62 +124,9 @@ map<char, vector<bool>> mapCodesAndLetters(map<char, unsigned long long> freqMap
 	vector<bool> curr;
 	calculateCodes(*root, curr, &codeVector);
 
-	//sort(freqVector.begin(), freqVector.end(), [](auto& left, auto& right) {
-	//	return left.second < right.second;
-	//});
-
-	for (const auto& val : freqVector) {
-		codeMap[val.first] = codeVector.back();
-		codeVector.erase(codeVector.end() - 1);
+	for (const auto& val : codeVector) {
+		codeMap[val.first] = val.second;
 	}
 	return codeMap;
 }
-
-//map<char, vector<bool>> mapCodesAndLetters(map<char, unsigned long long> freqMap)
-//{
-//	map<char, vector<bool>> codeMap;
-//	vector<vector<bool>> codeVector;
-//	vector<CharNode> minHeap;
-//	
-//	unsigned long long freq_left, freq_right;
-//	unsigned int index_left, index_right;
-//	int index = 0;
-//
-//	vector<pair<char, unsigned long long>> freqVector = sortMap(freqMap);
-//	for (const auto& val : freqVector) {
-//		Node tempNode = Node(val.second, index);
-//		minHeap.emplace(minHeap.begin(), CharNode(tempNode.freq, tempNode.indx, tempNode));
-//		index++;
-//	}
-//
-//	if (index == 0) {
-//		map<char, vector<bool>> codeMap2;
-//		return codeMap2;
-//	}
-//
-//	while (minHeap.size() >= 2) {
-//		//CharNode tempCharNode1 = pop(minHeap);
-//		//CharNode left = tempCharNode;
-//		//left.node = tempCharNode.node;
-//		//CharNode tempCharNode2 = pop(minHeap);
-//		//CharNode right = tempCharNode;
-//		//right.node = tempCharNode.node;
-//
-//		Node newNode = Node(minHeap[0].freq + minHeap[1].freq, min(minHeap[0].indx, minHeap[1].indx), &minHeap[0].node, &minHeap[1].node);
-//		pop(minHeap);
-//		pop(minHeap);
-//		minHeap.emplace(minHeap.begin(), CharNode(newNode.freq, newNode.indx, newNode));
-//	}
-//	Node root = minHeap[0].node;
-//	vector<bool> curr;
-//	calculateCodes(root, curr, &codeVector);
-//	index = -1;
-//	for (const auto& val : freqMap) {
-//		codeMap[val.first] = codeVector[index];
-//		index--;
-//	}
-//	return codeMap;
-//}
-
-
 
