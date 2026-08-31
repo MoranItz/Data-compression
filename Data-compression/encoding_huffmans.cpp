@@ -7,7 +7,6 @@ vector<char> getUserInput() {
 
 	cout << "Enter data string: ";
 	getline(cin, data_s);
-	cout << endl << data_s;
 
 	return vector<char>(data_s.begin(), data_s.end());
 }
@@ -130,3 +129,12 @@ map<char, vector<bool>> mapCodesAndLetters(map<char, unsigned long long> freqMap
 	return codeMap;
 }
 
+map<char, vector<bool>> getFileCodes(string filePath) {
+	map<char, vector<bool>> codeMap;
+	map<char, unsigned long long> freqMap;
+	vector<char> data_v;
+
+	data_v = getUserInput();
+	freqMap = getFreq(data_v);
+	return mapCodesAndLetters(freqMap);
+}

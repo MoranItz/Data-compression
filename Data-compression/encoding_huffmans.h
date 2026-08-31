@@ -30,3 +30,4 @@ void calculateCodes(Node root, vector<bool>, vector<pair<char, vector<bool>>>*en
 Node* pop(vector<Node*>& minHeap);
 void pushByFreq(vector<Node*>& minHeap, Node* newNode);
 map<char, vector<bool>> mapCodesAndLetters(map<char, unsigned long long> freqMap);
+map<char, vector<bool>> getFileCodes(string filePath);
