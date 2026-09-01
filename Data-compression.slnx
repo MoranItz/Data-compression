@@ -4,6 +4,7 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Project Path="Data-Compression-C/Data-Compression-C.vcxproj" Id="005af618-ab6e-465a-a78a-ff82cf48abb2" />
   <Project Path="Data-compression/Data-compression.vcxproj" Id="dd76263a-761a-48af-b9b9-a182310fc228" />
   <Project Path="POC-Data-compression/POC-Data-compression.pyproj" Type="888888a0-9f3d-457c-b088-3a5042f75d52" Id="cb5f2eef-639c-41b8-901c-d91c16d7ce3e">
     <Platform Project="AnyCPU" />

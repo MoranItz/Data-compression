@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{dd76263a-761a-48af-b9b9-a182310fc228}</ProjectGuid>
-    <RootNamespace>Datacompression</RootNamespace>
+    <ProjectGuid>{005af618-ab6e-465a-a78a-ff82cf48abb2}</ProjectGuid>
+    <RootNamespace>DataCompressionC</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Data-compression-CPP</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -140,11 +139,15 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="encoding_huffmans.h" />
+    <ClCompile Include="frequency.cpp" />
+    <ClCompile Include="hufftree.cpp" />
+    <ClCompile Include="minheap.cpp" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="encoding_huffmans.cpp" />
-    <ClCompile Include="source.cpp" />
+    <ClInclude Include="frequency.h" />
+    <ClInclude Include="hufftree.h" />
+    <ClInclude Include="minheap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
