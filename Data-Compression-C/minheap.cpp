@@ -2,6 +2,8 @@
 
 
 std::vector<Node*> buildMinheap(std::vector<std::pair<char, unsigned long long>> frequencyVec) {
+	std::vector<Node*> minheap;
+
 
 }
 
