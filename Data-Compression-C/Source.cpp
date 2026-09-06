@@ -1,6 +1,8 @@
 #include "frequency.h"
 #include "hufftree.h"
 
+#define FILE_PATH "C:\\Users\\jbt\\Desktop\\haha.txt"
+
 std::string getUserInput() {
 	std::string data_s = "";
 
@@ -17,8 +19,8 @@ int main() {
 	std::vector<Node*> minheap;
 	std::vector<std::pair<char, unsigned long long>> freqVec;
 	std::map<char, unsigned long long> freqMap;
-	std::string temp = getUserInput();
-	scanFrequency(freqMap, temp);
+	//std::string temp = getUserInput();
+	scanFrequency(freqMap, FILE_PATH);
 	freqVec = sortFrequency(freqMap);
 	minheap = buildMinheap(freqVec);
 	root = buildHuffTree(minheap);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
 #include <map>
 #include <vector>
 #include <string>
@@ -11,7 +12,7 @@
 /// Function gets a reference to a map and a string of chars (data), and it enters all of the
 /// letters frequencies into the map so each key is the letter and the value is the matching
 /// letter frequency (amount of times the letter has shown up in the file.
-void scanFrequency(std::map<char, unsigned long long>& frequencyMap, std::string data);
+void scanFrequency(std::map<char, unsigned long long>& frequencyMap, std::string path);
 
 /// std::map<char, unsigned long long> frequencyMap - map of all frequencies
 /// Function gets a map of all of the appearing letters as keys and the matching frequency

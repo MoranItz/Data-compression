@@ -38,5 +38,8 @@
     <ClInclude Include="hufftree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="fileHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

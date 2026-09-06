@@ -145,6 +145,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="fileHandler.h" />
     <ClInclude Include="frequency.h" />
     <ClInclude Include="hufftree.h" />
     <ClInclude Include="minheap.h" />
