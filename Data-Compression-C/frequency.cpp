@@ -2,7 +2,7 @@
 
 
 void scanFrequency(std::map<char, unsigned long long>& frequencyMap, std::string data) {
-	for (int i = 0; i < data.size(); i++) { // For character in string add 1 to the count
+	for (int i = 0; i < data.length(); i++) { // For character in string add 1 to the count
 		frequencyMap[data[i]]++;
 	}
 }
