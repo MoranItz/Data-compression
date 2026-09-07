@@ -27,6 +27,9 @@
     <ClCompile Include="hufftree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="compression.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="frequency.h">
@@ -38,7 +41,7 @@
     <ClInclude Include="hufftree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fileHandler.h">
+    <ClInclude Include="compression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

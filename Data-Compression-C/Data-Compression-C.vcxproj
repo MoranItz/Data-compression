@@ -139,13 +139,14 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="compression.cpp" />
     <ClCompile Include="frequency.cpp" />
     <ClCompile Include="hufftree.cpp" />
     <ClCompile Include="minheap.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="fileHandler.h" />
+    <ClInclude Include="compression.h" />
     <ClInclude Include="frequency.h" />
     <ClInclude Include="hufftree.h" />
     <ClInclude Include="minheap.h" />

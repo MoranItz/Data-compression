@@ -1,7 +1,9 @@
 #include "frequency.h"
 #include "hufftree.h"
+#include "compression.h"
 
-#define FILE_PATH "C:\\Users\\jbt\\Desktop\\haha.txt"
+#define FILE_INPUT_PATH "C:\\Users\\jbt\\Desktop\\haha.txt"
+#define FILE_OUTPUT_PATH "C:\\Users\\jbt\\Desktop\\haha.huff"
 
 std::string getUserInput() {
 	std::string data_s = "";
@@ -13,27 +15,29 @@ std::string getUserInput() {
 }
 
 int main() {
-	std::vector<std::pair<char, std::vector<char>>> codeVec;
-	std::vector<char> curr;
+	std::map<char, std::string> codeMap;
+	std::string curr;
 	Node* root;
 	std::vector<Node*> minheap;
 	std::vector<std::pair<char, unsigned long long>> freqVec;
 	std::map<char, unsigned long long> freqMap;
-	//std::string temp = getUserInput();
-	scanFrequency(freqMap, FILE_PATH);
+
+	scanFrequency(freqMap, FILE_INPUT_PATH);
 	freqVec = sortFrequency(freqMap);
 	minheap = buildMinheap(freqVec);
 	root = buildHuffTree(minheap);
-	calculateHuffCodes(root, codeVec, curr);
+	calculateHuffCodes(root, codeMap, curr);
 
-	std::cout << std::endl;
-	for (const auto& pair : codeVec) {
-		std::cout << pair.first << " : ";
-		for (int i = 0; i < pair.second.size(); i++) {
-			std::cout << pair.second[i];
-		}
-		std::cout << std::endl;
-	}
+	compressToFile(FILE_INPUT_PATH, FILE_OUTPUT_PATH, codeMap);
 
 	return 0;
 }
+
+//std::cout << std::endl;
+//for (const auto& key : codeMap) {
+//	std::cout << key.first << " : ";
+//	for (int i = 0; i < key.second.size(); i++) {
+//		std::cout << key.second[i];
+//	}
+//	std::cout << std::endl;
+//}

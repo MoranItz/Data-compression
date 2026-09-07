@@ -1,6 +1,8 @@
 #include "frequency.h"
 
 
+
+
 void scanFrequency(std::map<char, unsigned long long>& frequencyMap, std::string path) {
 	std::ifstream file(path);
 	std::string line;
@@ -9,8 +11,10 @@ void scanFrequency(std::map<char, unsigned long long>& frequencyMap, std::string
 			for (int i = 0; i < line.length(); i++) { // For character in string add 1 to the count
 				frequencyMap[line[i]]++;
 			}
+			frequencyMap[END_OF_LINE]++;
 		}
 		file.close();
+		frequencyMap[PSEUDO_EOF] = 1;
 	}
 	else {
 		std::cout << "Failed to open file!";

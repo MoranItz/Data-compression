@@ -13,7 +13,7 @@ Node* buildHuffTree(std::vector<Node*>& minheap) {
 	return minheap[ROOT_NODE];
 }
 
-void calculateHuffCodes(Node* root, std::vector<std::pair<char, std::vector<char>>>& codeVector, std::vector<char> curr) {
+void calculateHuffCodes(Node* root, std::map<char, std::string>& codeMap, std::string curr) {
 	if (root == nullptr) { // If the tree is empty
 		return;
 	}
@@ -21,15 +21,14 @@ void calculateHuffCodes(Node* root, std::vector<std::pair<char, std::vector<char
 		if (curr.size() == NULL) { // If its the only letter push back the code 0
 			curr.push_back('0');
 		}
-		std::pair<char, std::vector<char>> tempPair = { root->letter, curr };
-		codeVector.push_back(tempPair);
+		codeMap[root->letter] = curr;
 		return;
 	}
-	calculateHuffCodes(root->left, codeVector, insertCarried(curr, '0')); // Go left
-	calculateHuffCodes(root->right, codeVector, insertCarried(curr, '1')); // Go right
+	calculateHuffCodes(root->left, codeMap, insertCarried(curr, '0')); // Go left
+	calculateHuffCodes(root->right, codeMap, insertCarried(curr, '1')); // Go right
 }
 
-std::vector<char> insertCarried(std::vector<char> codeVector, char carried) {
-	codeVector.push_back(carried);
-	return codeVector;
+std::string insertCarried(std::string codeStr, char carried) {
+	codeStr.push_back(carried);
+	return codeStr;
 }
