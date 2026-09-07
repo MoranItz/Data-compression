@@ -40,16 +40,18 @@ void compressFile(std::string inputFilePath, std::string outputFilePath, std::ma
 }
 
 void dehuffer(std::map<char, std::string>& codeMap, std::string compressedFilePath, std::string decompressedFilePath) {
-	char letter;
+	std::string line;
 	std::string codeString;
 
 	std::ifstream inputStream;
 	inputStream.open(compressedFilePath);
 	readHeader(inputStream, codeMap);
 
-	while (inputStream.get(letter)) {
-		std::bitset<8> bits(letter);
-		codeString.append(bits.to_string());
+	while (getline(inputStream, line)) {
+		for (int i = 0; i < line.size(); ++i) {
+			std::bitset<8> bits(line[i]);
+			codeString.append(bits.to_string());
+		}
 	}
 	Node* root = buildDecodingTree(codeMap);
 	decompressFile(codeString, root, decompressedFilePath);
