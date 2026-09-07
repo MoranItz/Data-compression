@@ -1,12 +1,12 @@
 #pragma once
 
-#include "minheap.h"
 #include <iostream>
 #include <map>
 #include <algorithm>
 #include <string>
 
-#define ROOT_NODE 0
+#include "minheap.h"
+#include "frequency.h"
 
 
 /// std::vector<Node*>& minheap - The ordered minheap with all of the letter nodes inside

@@ -5,8 +5,8 @@ Node* buildHuffTree(std::vector<Node*>& minheap) {
 	while (minheap.size() >= 2) {
 		Node* left = pop(minheap);
 		Node* right = pop(minheap);
-		// '_' is fine since the newNode has predececors
-		Node* newNode = new Node((left->frequency + right->frequency), std::min(left->index, right->index), '_', left, right);
+		// INTERNAL_NODE_CHARACTER is a psuedo eof char to identify a non leaf node
+		Node* newNode = new Node((left->frequency + right->frequency), std::min(left->index, right->index), INTERNAL_NODE_CHARACTER, left, right);
 		pushByFrequency(minheap, newNode);
 	}
 

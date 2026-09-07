@@ -3,13 +3,8 @@
 #include <iostream>
 #include <vector>
 
-struct Node {
-	unsigned long long frequency;
-	int index;
-	char letter;
-	Node* left;
-	Node* right;
-};
+#include "consts.h"
+
 
 /// std::vector<std::pair<char, unsigned long long>> frequencyVec - sorted vector that holds pairs of the letters and their matching frequencies
 /// This function builds the crucial minheap, the object that will hold the huffman tree inside it and now holds all of the nodes

@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="compression.h" />
+    <ClInclude Include="consts.h" />
     <ClInclude Include="frequency.h" />
     <ClInclude Include="hufftree.h" />
     <ClInclude Include="minheap.h" />

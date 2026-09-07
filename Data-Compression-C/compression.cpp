@@ -7,7 +7,7 @@ void writeHeader(std::ofstream& outputStream, std::map<char, std::string> codeMa
 	outputStream << HEADER_TEXT_SEPERATOR;
 }
 
-void compressToFile(std::string inputFilePath, std::string outputFilePath, std::map<char, std::string> codeMap) {
+void compressFile(std::string inputFilePath, std::string outputFilePath, std::map<char, std::string> codeMap) {
 	char letter;
 	std::string file;
 	std::ifstream inputStream;
@@ -37,4 +37,111 @@ void compressToFile(std::string inputFilePath, std::string outputFilePath, std::
 	outputStream.flush();
 	outputStream.close();
 
+}
+
+void dehuffer(std::map<char, std::string>& codeMap, std::string compressedFilePath, std::string decompressedFilePath) {
+	char letter;
+	std::string codeString;
+
+	std::ifstream inputStream;
+	inputStream.open(compressedFilePath);
+	readHeader(inputStream, codeMap);
+
+	while (inputStream.get(letter)) {
+		std::bitset<8> bits(letter);
+		codeString.append(bits.to_string());
+	}
+	Node* root = buildDecodingTree(codeMap);
+	decompressFile(codeString, root, decompressedFilePath);
+}
+
+void decompressFile(std::string codeString, Node* root, std::string decompressedFilePath) {
+	std::ofstream outputStream;
+	outputStream.open(decompressedFilePath, std::ios::out);
+
+	Node* traversingNode = root;
+	for (int i = 0; i < codeString.size(); ++i) {
+		if (codeString[i] == '0') {
+			traversingNode = traversingNode->left;
+		}
+		else {
+			traversingNode = traversingNode->right;
+		}
+
+		if (traversingNode->letter != INTERNAL_NODE_CHARACTER) {
+			if (traversingNode->letter == PSEUDO_EOF) {
+				break;
+			}
+			outputStream << traversingNode->letter;
+			traversingNode = root;
+		}
+	}
+	outputStream.flush();
+	outputStream.close();
+}
+
+Node* buildDecodingTree(std::map<char, std::string>& codeMap) {
+	Node* root = new Node(NULL, NULL, INTERNAL_NODE_CHARACTER);
+	Node* previousNode;
+
+	for (const auto& item : codeMap) {
+		previousNode = root;
+		Node* newNode = new Node(NULL, NULL, item.first);
+		std::string letterCode = item.second;
+
+		for (int i = 0; i < letterCode.size(); ++i) {
+			if (letterCode[i] == '0') {
+				if (i == letterCode.size() - 1) {
+					previousNode->left = newNode;
+				}
+				else {
+					if (!previousNode->left) {
+						previousNode->left = new Node(NULL, NULL, INTERNAL_NODE_CHARACTER);
+						previousNode = previousNode->left;
+					}
+					else {
+						previousNode = previousNode->left;
+					}
+				}
+			}
+
+			else {
+				if (i == letterCode.size() - 1) {
+					previousNode->right = newNode;
+				}
+				else {
+					if (!previousNode->right) {
+						previousNode->right = new Node(NULL, NULL, INTERNAL_NODE_CHARACTER);
+						previousNode = previousNode->right;
+					}
+					else {
+						previousNode = previousNode->right;
+					}
+				}
+			}
+		}
+	}
+	return root;
+}
+
+void readHeader(std::ifstream& inputStream, std::map<char, std::string>& codeMap) {
+	codeMap.clear();
+	char letter;
+	
+	inputStream.get(letter);
+	char key = letter;
+
+	while (letter != HEADER_TEXT_SEPERATOR) {
+		if (letter == CHARACTER_CODE_SEPERATOR) {
+			inputStream.get(letter);
+			while (letter != HEADER_ENTRY_SEPERATOR) {
+				codeMap[key] += letter;
+				inputStream.get(letter);
+			}
+		}
+		else {
+			key = letter;
+			inputStream.get(letter);
+		}
+	}
 }
